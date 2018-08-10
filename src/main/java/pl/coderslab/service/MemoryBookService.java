@@ -1,10 +1,13 @@
 package pl.coderslab.service;
 
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import pl.coderslab.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class MemoryBookService {
