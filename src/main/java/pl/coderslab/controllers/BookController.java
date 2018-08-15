@@ -51,9 +51,7 @@ public class BookController {
         book.setPublisher(request.getParameter("publisher"));
         book.setType(request.getParameter("type"));
 
-        List<Book> books = memoryBookService.getList();
-        books.add(book);
-        memoryBookService.setList(books);
+        memoryBookService.updateBookById(book);
         return "Book was added";
     }
 

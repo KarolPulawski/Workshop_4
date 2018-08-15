@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Service
-public class MemoryBookService {
+public class MemoryBookService implements BookService{
 
     private List<Book> list;
 
@@ -27,6 +27,9 @@ public class MemoryBookService {
 
     public void setList(List<Book> list) {this.list = list;}
 
+
+
+    @Override
     public Book getBookById(Long id) {
 
         for(Book book : list) {
@@ -37,18 +40,32 @@ public class MemoryBookService {
         return null;
     }
 
+    @Override
     public void updateBookById(Book book) {
-        for(Book b : list) {
-            if(book.getId() == b.getId()) {
-                b.setAuthor(book.getAuthor());
-                b.setIsbn(book.getIsbn());
-                b.setTitle(book.getTitle());
-                b.setType(book.getType());
-                b.setPublisher(book.getPublisher());
+        long id = book.getId();
+        if(id == 0) {
+            Book b = new Book();
+            b.setId(book.getId());
+            b.setPublisher(book.getPublisher());
+            b.setTitle(book.getTitle());
+            b.setIsbn(book.getIsbn());
+            b.setAuthor(book.getAuthor());
+            b.setType(book.getType());
+            list.add(b);
+        } else {
+            for(Book b : list) {
+                if(book.getId() == b.getId()) {
+                    b.setAuthor(book.getAuthor());
+                    b.setIsbn(book.getIsbn());
+                    b.setTitle(book.getTitle());
+                    b.setType(book.getType());
+                    b.setPublisher(book.getPublisher());
+                }
             }
         }
     }
 
+    @Override
     public void deleteBookById(Long id) {
         List<Book> toDelete = new ArrayList<>();
         for(Book book : list) {
