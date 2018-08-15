@@ -42,8 +42,18 @@ public class MemoryBookService implements BookService{
 
     @Override
     public void updateBookById(Book book) {
-        long id = book.getId();
-        if(id == 0) {
+        boolean flag = true;
+        for(Book b : list) {
+            if(book.getId() == b.getId()) {
+                b.setAuthor(book.getAuthor());
+                b.setIsbn(book.getIsbn());
+                b.setTitle(book.getTitle());
+                b.setType(book.getType());
+                b.setPublisher(book.getPublisher());
+                flag = false;
+            }
+        }
+        if(flag) {
             Book b = new Book();
             b.setId(book.getId());
             b.setPublisher(book.getPublisher());
@@ -52,16 +62,6 @@ public class MemoryBookService implements BookService{
             b.setAuthor(book.getAuthor());
             b.setType(book.getType());
             list.add(b);
-        } else {
-            for(Book b : list) {
-                if(book.getId() == b.getId()) {
-                    b.setAuthor(book.getAuthor());
-                    b.setIsbn(book.getIsbn());
-                    b.setTitle(book.getTitle());
-                    b.setType(book.getType());
-                    b.setPublisher(book.getPublisher());
-                }
-            }
         }
     }
 
