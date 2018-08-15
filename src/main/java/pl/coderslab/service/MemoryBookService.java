@@ -1,7 +1,6 @@
 package pl.coderslab.service;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
+
 import org.springframework.stereotype.Service;
 import pl.coderslab.model.Book;
 
@@ -22,25 +21,41 @@ public class MemoryBookService {
                 "Sierra Kathy, Bates Bert", "Helion", "programming"));
         list.add(new Book(3L, "9780130819338", "Java 2. Podstawy",
                 "Cay Horstmann, Gary Cornell", "Helion", "programming"));
-
     }
 
     public List<Book> getList() {return list;}
 
     public void setList(List<Book> list) {this.list = list;}
 
+    public Book getBookById(Long id) {
 
+        for(Book book : list) {
+            if(book.getId() == id) {
+                return book;
+            }
+        }
+        return null;
+    }
 
-//    public Book getBookById(Long id) {
-//
-//    }
-//
-//    public void updateBookById(Long id) {
-//
-//    }
-//
-//    public void deleteBookById(Long id) {
-//
-//    }
+    public void updateBookById(Book book) {
+        for(Book b : list) {
+            if(book.getId() == b.getId()) {
+                b.setAuthor(book.getAuthor());
+                b.setIsbn(book.getIsbn());
+                b.setTitle(book.getTitle());
+                b.setType(book.getType());
+                b.setPublisher(book.getPublisher());
+            }
+        }
+    }
 
+    public void deleteBookById(Long id) {
+        List<Book> toDelete = new ArrayList<>();
+        for(Book book : list) {
+            if(book.getId() == id) {
+                toDelete.add(book);
+            }
+        }
+        list.removeAll(toDelete);
+    }
 }
