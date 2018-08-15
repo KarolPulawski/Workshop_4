@@ -11,6 +11,8 @@ import java.util.List;
 @Service
 public class MemoryBookService implements BookService{
 
+    private static int counter = 4;
+
     private List<Book> list;
 
     public MemoryBookService() {
@@ -55,7 +57,7 @@ public class MemoryBookService implements BookService{
         }
         if(flag) {
             Book b = new Book();
-            b.setId(book.getId());
+            b.setId(counter++);
             b.setPublisher(book.getPublisher());
             b.setTitle(book.getTitle());
             b.setIsbn(book.getIsbn());
