@@ -1,10 +1,13 @@
 package pl.coderslab.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Book;
 import pl.coderslab.service.BookService;
+import pl.coderslab.service.TransferService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -40,35 +43,20 @@ public class BookController {
         return memoryBookService.getBookById(id);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/books", method = RequestMethod.POST)
     @ResponseBody
-    public String addBook(HttpServletRequest request) {
-        Book book = new Book();
-        book.setAuthor(request.getParameter("author"));
-        book.setId(Long.parseLong(request.getParameter("id")));
-        book.setIsbn(request.getParameter("isbn"));
-        book.setTitle(request.getParameter("title"));
-        book.setPublisher(request.getParameter("publisher"));
-        book.setType(request.getParameter("type"));
-
+    public String addBook(@RequestBody Book book) {
         memoryBookService.updateBookById(book);
         return "Book was added";
     }
 
-
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/books/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public String putBook(HttpServletRequest request, @PathVariable long id) {
-        Book book = new Book();
-        book.setId(id);
-        book.setType(request.getParameter("type"));
-        book.setPublisher(request.getParameter("publisher"));
-        book.setTitle(request.getParameter("title"));
-        book.setIsbn(request.getParameter("isbn"));
-        book.setAuthor(request.getParameter("author"));
+    public String updateBook(@RequestBody Book book, @PathVariable long id) {
         memoryBookService.updateBookById(book);
-
-        return "Book was modified.";
+        return "Book was modified";
     }
 
     @RequestMapping(value = "/books/{id}", method = RequestMethod.DELETE)
